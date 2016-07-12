@@ -18,66 +18,76 @@
 	}
 
 	 //検索結果の全体表示
-	echo(" | 全国地方公共団体コード | 旧郵便番号 | 郵便番号 | 都道府県名(半角カタカナ) | 市区町村名(半角カタカナ)|町域名(半角カタカナ)| 都道府県名(漢字)| 市区町村名(漢字)| 町域名(漢字)| 一町域で複数の郵便番号か|小字毎に番地が起番されている町域か| 丁目を有する町域名か|一郵便番号で複数の町域か| 更新確認| 更新理由|<br>");
+	print <<<EOT
+	<table border='1'>
+	<tr>
+	<th>全国地方公共団体コード</th><th>旧郵便番号</th><th>郵便番号</th><th>都道府県名(半角カタカナ)</th><th>市区町村名(半角カタカナ)</th><th>町域名(半角カタカナ)</th><th>都道府県名(漢字)</th><th>市区町村名(漢字)</th><th>町域名(漢字)</th><th>一町域で複数の郵便番号か</th><th>小字毎に番地が起番されている町域か</th><th>丁目を有する町域名か</th><th>一郵便番号で複数の町域か</th><th>更新確認</th><th>更新理由</th>
+	</tr>
+EOT;
+
 	while ($row = mysql_fetch_array($result)) {
-		echo $row["public_group_code"] ;print("    ");
-		echo $row["zip_code_old"] ;print("    ");
-		echo $row["zip_code"] ;print("    ");
-		echo $row["prefecture_kana"] ;print("    ");
-		echo $row["city_kana"] ;print("    ");
-		echo $row["town_kana"] ;print("    ");
-		echo $row["prefecture"] ;print("    ");
-		echo $row["city"] ;print("    ");
-		echo $row["town"] ;print("    ");
+		print"<tr>";
+		echo'<td>' .$row["public_group_code"] .'</td>';
+		echo'<td>' .$row["zip_code_old"] .'</td>';
+		echo'<td>' .$row["zip_code"] .'</td>';
+		echo'<td>' .$row["prefecture_kana"] .'</td>';
+		echo'<td>' .$row["city_kana"] .'</td>';
+		echo'<td>' .$row["town_kana"] .'</td>';
+		echo'<td>' .$row["prefecture"] .'</td>';
+		echo'<td>' .$row["city"] .'</td>';
+		echo'<td>' .$row["town"] .'</td>';
 		if ($row["town_double_zip_code"] = 1 ) {
-			print("該当  ");print("    ");
+			print'<td>'.("該当  ").'</td>';
 		} else {
-			print("該当せず  ");print("    ");
+			print'<td>'.("該当せず  ").'</td>';
 		}
 
 		if ($row["town_multi_address"] = 1 ) {
-			print("該当  ");print("    ");
+			print'<td>'.("該当  ").'</td>';
 		} else {
-			print("該当せず  ");print("    ");
+			print'<td>'.("該当せず  ").'</td>';
 		}
 
 		if ($row["town_attach_district"] = 1 ) {
-			print("該当  ");print("    ");
+			print'<td>'.("該当  ").'</td>';
 		} else {
-			print("該当せず  ");print("    ");
+			print'<td>'.("該当せず  ").'</td>';
 		}
 
 		if ($row["zip_code_multi_town"] = 1 ) {
-			print("該当  ");print("    ");
+			print'<td>'.("該当  ").'</td>';
 		} else {
-			print("該当せず  ");print("    ");
+			print'<td>'.("該当せず  ").'</td>';
 		}
 
 		if ($row["update_check"] = 0 ) {
-			print("変更なし  ");print("    ");
+			print'<td>'.("変更なし  ").'</td>';
 		} elseif ($row["update_check"] = 1) {
-			print("変更あり  ");print("    ");
+			print'<td>'.("変更あり  ").'</td>';
 		} else {
-			print("廃止  ");print("    ");
+			print'<td>'.("廃止  ").'</td>';
 		}
 
 		if ($row["update_reason"] = 0 ) {
-			print("変更なし  ");print("    ");
+			print'<td>'.("変更なし  ").'</td>';
 		} elseif ($row["update_reason"] = 1) {
-			print("市政・区政・町政・分区・政令指定都市施行  ");print("    ");
+			print'<td>'.("市政・区政・町政・分区・政令指定都市施行  ").'</td>';
 		} elseif ($row["update_reason"] = 2) {
-			print("住居表示の実施  ");print("    ");
+			print'<td>'.("住居表示の実施  ").'</td>';
 		} elseif ($row["update_reason"] = 3) {
-			print("区画整理  ");print("    ");
+			print'<td>'.("区画整理  ").'</td>';
 		} elseif ($row["update_reason"] = 4) {
-			print("郵便区調整等  ");print("    ");
+			print'<td>'.("郵便区調整等  ").'</td>';
 		} elseif ($row["update_reason"] = 5) {
-			print("訂正  ");print("    ");
+			print'<td>'.("訂正  ").'</td>';
 		} else {
-			print("廃止  ");print("    ");
+			print'<td>'.("廃止  ").'</td>';
 		}
-		echo "<BR>" ;
-			};
+		print'</tr>';
+		print"<BR>";
+		};
+
+print "</table>";
 
 	//結果セットの開放
 	mysql_free_result ($result) ;
