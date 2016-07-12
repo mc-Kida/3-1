@@ -8,12 +8,14 @@
 	}
 
 	$db = mysql_select_db("lesson" , $link);
-	if (!$db) {
+	if (!$db)
+	{
 		die("データベース接続エラーです。" .mysql_error());
 	}
 
 	$result = mysql_query("SELECT * FROM kadai_kida_ziplist");
-	if (!$result) {
+	if (!$result)
+	{
 		echo("SQL失敗");
 	}
 
@@ -25,7 +27,8 @@
 	</tr>
 EOT;
 
-	while ($row = mysql_fetch_array($result)) {
+	while ($row = mysql_fetch_array($result))
+	{
 		print"<tr>";
 		echo'<td>' .$row["public_group_code"] .'</td>';
 		echo'<td>' .$row["zip_code_old"] .'</td>';
@@ -36,58 +39,90 @@ EOT;
 		echo'<td>' .$row["prefecture"] .'</td>';
 		echo'<td>' .$row["city"] .'</td>';
 		echo'<td>' .$row["town"] .'</td>';
-		if ($row["town_double_zip_code"] = 1 ) {
+
+		if ($row["town_double_zip_code"] = 1 )
+		{
 			print'<td>'.("該当  ").'</td>';
-		} else {
+		}
+		else
+		{
 			print'<td>'.("該当せず  ").'</td>';
 		}
 
-		if ($row["town_multi_address"] = 1 ) {
+		if ($row["town_multi_address"] = 1 )
+		{
 			print'<td>'.("該当  ").'</td>';
-		} else {
+		}
+		else
+		{
 			print'<td>'.("該当せず  ").'</td>';
 		}
 
-		if ($row["town_attach_district"] = 1 ) {
+		if ($row["town_attach_district"] = 1 )
+		{
 			print'<td>'.("該当  ").'</td>';
-		} else {
+		}
+		else
+		{
 			print'<td>'.("該当せず  ").'</td>';
 		}
 
-		if ($row["zip_code_multi_town"] = 1 ) {
+		if ($row["zip_code_multi_town"] = 1 )
+		{
 			print'<td>'.("該当  ").'</td>';
-		} else {
+		}
+		else
+		{
 			print'<td>'.("該当せず  ").'</td>';
 		}
 
-		if ($row["update_check"] = 0 ) {
+		if ($row["update_check"] = 0 )
+		{
 			print'<td>'.("変更なし  ").'</td>';
-		} elseif ($row["update_check"] = 1) {
+		}
+		elseif ($row["update_check"] = 1)
+		{
 			print'<td>'.("変更あり  ").'</td>';
-		} else {
+		}
+		else
+		{
 			print'<td>'.("廃止  ").'</td>';
 		}
 
-		if ($row["update_reason"] = 0 ) {
+		if ($row["update_reason"] = 0 )
+		{
 			print'<td>'.("変更なし  ").'</td>';
-		} elseif ($row["update_reason"] = 1) {
+		}
+		elseif ($row["update_reason"] = 1)
+		{
 			print'<td>'.("市政・区政・町政・分区・政令指定都市施行  ").'</td>';
-		} elseif ($row["update_reason"] = 2) {
+		}
+		elseif ($row["update_reason"] = 2)
+		{
 			print'<td>'.("住居表示の実施  ").'</td>';
-		} elseif ($row["update_reason"] = 3) {
+		}
+		elseif ($row["update_reason"] = 3)
+		{
 			print'<td>'.("区画整理  ").'</td>';
-		} elseif ($row["update_reason"] = 4) {
+		}
+		elseif ($row["update_reason"] = 4)
+		{
 			print'<td>'.("郵便区調整等  ").'</td>';
-		} elseif ($row["update_reason"] = 5) {
+		}
+		elseif ($row["update_reason"] = 5)
+		{
 			print'<td>'.("訂正  ").'</td>';
-		} else {
+		}
+		else
+		{
 			print'<td>'.("廃止  ").'</td>';
 		}
+
 		print'</tr>';
 		print"<BR>";
-		};
+	};
 
-print "</table>";
+	print "</table>";
 
 	//結果セットの開放
 	mysql_free_result ($result) ;
